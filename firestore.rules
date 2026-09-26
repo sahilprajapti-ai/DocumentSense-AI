@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper function to check authentication
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Helper function to check if caller owns the document path
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // User profile isolation
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+
+      // Sub-collections under user document
+      match /{allSubcollections=**} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+
+    // Enterprise / Contact Sales Inquiries
+    match /sales_inquiries/{inquiryId} {
+      // Anyone can submit a sales lead inquiry with valid email and name
+      allow create: if request.resource.data.email is string 
+                    && request.resource.data.email.size() > 4
+                    && request.resource.data.fullName is string
+                    && request.resource.data.fullName.size() > 1;
+      // Allow submitters to read their own inquiry if authenticated
+      allow read: if isAuthenticated() && (resource.data.userId == request.auth.uid);
+      allow update, delete: if false;
+    }
+  }
+}

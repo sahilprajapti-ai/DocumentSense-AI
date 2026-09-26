@@ -1,0 +1,6 @@
+{
+  "name": "DocumentSense AI",
+  "description": "Next-Gen AI SaaS platform converting complex government circulars, legal contracts, insurance policies, and university forms into simple plain-language summaries, deadlines, checklists, action items, and interactive Q&A.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

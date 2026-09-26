@@ -1,0 +1,52 @@
+{
+  "$schema": "https://firebase.google.com/docs/firestore/blueprint.schema.json",
+  "entities": {
+    "UserProfile": {
+      "collection": "users",
+      "fields": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "displayName": { "type": "string", "description": "User's full name" },
+        "email": { "type": "string", "description": "User's email address" },
+        "photoURL": { "type": "string", "description": "User profile photo URL or avatar" },
+        "plan": { "type": "string", "description": "Subscription tier (Free, Pro Individual, Team)" },
+        "persona": { "type": "string", "description": "Primary document focus persona (student, immigrant, legal, healthcare, business)" },
+        "createdAt": { "type": "timestamp", "description": "Account creation timestamp" },
+        "updatedAt": { "type": "timestamp", "description": "Last profile update timestamp" }
+      }
+    },
+    "UserDocument": {
+      "collection": "users/{userId}/documents",
+      "fields": {
+        "title": { "type": "string", "description": "Document title" },
+        "filename": { "type": "string", "description": "Original file name" },
+        "category": { "type": "string", "description": "Document classification category" },
+        "confidence": { "type": "string", "description": "AI extraction confidence score" },
+        "status": { "type": "string", "description": "Current processing/action status" },
+        "summary": { "type": "object", "description": "Extracted plain English summary" },
+        "dates": { "type": "array", "description": "Extracted deadline records" },
+        "checklist": { "type": "array", "description": "Document requirement checklist items" },
+        "actions": { "type": "array", "description": "Sequential action steps" },
+        "terms": { "type": "array", "description": "Decoded difficult terms" },
+        "missing": { "type": "array", "description": "Missing information warnings" },
+        "createdAt": { "type": "timestamp", "description": "Analysis creation timestamp" }
+      }
+    },
+    "SalesInquiry": {
+      "collection": "sales_inquiries",
+      "fields": {
+        "id": { "type": "string", "description": "Unique inquiry identifier / ticket ID" },
+        "fullName": { "type": "string", "description": "Lead full name" },
+        "email": { "type": "string", "description": "Work/Business email address" },
+        "company": { "type": "string", "description": "Company or Institution name" },
+        "teamSize": { "type": "string", "description": "Size of organization" },
+        "volume": { "type": "string", "description": "Estimated monthly document volume" },
+        "useCase": { "type": "string", "description": "Primary document domain or use-case" },
+        "compliance": { "type": "array", "description": "Regulatory requirements (HIPAA, SOC2, GDPR, etc.)" },
+        "message": { "type": "string", "description": "Specific requirements or deployment questions" },
+        "status": { "type": "string", "description": "Inquiry status: new, contacted, closed" },
+        "userId": { "type": "string", "description": "Optional authenticated UID of submitter" },
+        "createdAt": { "type": "timestamp", "description": "Submission timestamp" }
+      }
+    }
+  }
+}
